@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global scrolling and layout fixes */
+html, body {
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-y: auto; /* Ensure vertical scroll is always available */
+}
+
+/* Ensure root container allows full scrolling */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure all page containers are fully scrollable */
+.min-h-screen {
+  min-height: 100vh !important;
+  padding-bottom: 2rem; /* Add bottom padding to prevent content cutoff */
+}
+
+/* Mobile bottom navigation spacing */
+@media (max-width: 768px) {
+  .min-h-screen {
+    padding-bottom: 6rem; /* Extra space for mobile bottom nav */
+  }
+}
+
+/* Slider smooth transitions */
+.slider-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* Text content styling for better readability over images */
+.header-contents {
+    background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, transparent 100%);
+    border-radius: 8px;
+}
+
+/* Toast animation */
+.animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Ensure content is never hidden behind fixed elements */
+.content-wrapper {
+    padding-top: 5rem; /* Space for fixed navbar */
+    padding-bottom: 2rem; /* Space for content breathing room */
+}
+
+/* Mobile content spacing */
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding-bottom: 6rem; /* Extra space for mobile bottom nav */
+  }
+}
