@@ -7,6 +7,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useCart } from '../hooks/useCart';
 import { useSweetsContext } from '../hooks/useSweetsContext';
 import { FASHION_CATEGORIES } from '../constants/categories';
+import Help from './Help';
 
 const AdminDashboard = () => {
   const { token, user } = useAuth();
@@ -455,6 +456,16 @@ const AdminDashboard = () => {
               >
                 Manage Slider
               </button>
+              <button
+                onClick={() => setActiveTab('help')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap flex-shrink-0 ${
+                  activeTab === 'help'
+                    ? 'border-pink-600 text-pink-700'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Help
+              </button>
               </nav>
             </div>
           </div>
@@ -807,6 +818,11 @@ const AdminDashboard = () => {
                 </div>
               )}
             </div>
+          </div>
+        ) : activeTab === 'help' ? (
+          /* Help Page */
+          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <Help />
           </div>
         ) : (
           /* Finish Orders - Completed/Cancelled Orders */
