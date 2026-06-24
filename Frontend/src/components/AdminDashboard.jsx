@@ -403,10 +403,11 @@ const AdminDashboard = () => {
         {/* Tab Navigation */}
         <div className="mb-6">
           <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8">
+            <div className="overflow-x-auto whitespace-nowrap scrollbar-hide">
+              <nav className="-mb-px flex space-x-8 min-w-max">
               <button
                 onClick={() => setActiveTab('products')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap flex-shrink-0 ${
                   activeTab === 'products'
                     ? 'border-pink-600 text-pink-700'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -416,7 +417,7 @@ const AdminDashboard = () => {
               </button>
               <button
                 onClick={() => setActiveTab('orders')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap flex-shrink-0 ${
                   activeTab === 'orders'
                     ? 'border-pink-600 text-pink-700'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -426,7 +427,7 @@ const AdminDashboard = () => {
               </button>
               <button
                 onClick={() => setActiveTab('users')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap flex-shrink-0 ${
                   activeTab === 'users'
                     ? 'border-pink-600 text-pink-700'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -436,7 +437,7 @@ const AdminDashboard = () => {
               </button>
               <button
                 onClick={() => setActiveTab('finishOrders')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap flex-shrink-0 ${
                   activeTab === 'finishOrders'
                     ? 'border-pink-600 text-pink-700'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -446,7 +447,7 @@ const AdminDashboard = () => {
               </button>
               <button
                 onClick={() => setActiveTab('slider')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap flex-shrink-0 ${
                   activeTab === 'slider'
                     ? 'border-pink-600 text-pink-700'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -454,7 +455,8 @@ const AdminDashboard = () => {
               >
                 Manage Slider
               </button>
-            </nav>
+              </nav>
+            </div>
           </div>
         </div>
 

@@ -17,7 +17,7 @@ const Help = () => {
             {/* Profile Image */}
             <div className="mb-6">
               <img
-                src="/public/aastha.png.jpeg"
+                src="/aastha.png.jpeg"
                 alt="Aastha Vikas Verma"
                 className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-pink-100 shadow-md"
               />
