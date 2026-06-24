@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SweetHub Login Fix Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .test-section { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        .info { color: blue; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #0056b3; }
+        input { padding: 8px; margin: 5px; width: 250px; border: 1px solid #ccc; border-radius: 4px; }
+        pre { background: #333; color: #fff; padding: 15px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔧 SweetHub Login Network Error Fix Test</h1>
+    
+    <div class="test-section">
+        <h2>✅ Fix Applied: credentials: 'include' added to all fetch requests</h2>
+        <p>This test verifies that login works without network errors after the CORS fix.</p>
+    </div>
+
+    <div class="test-section">
+        <h2>🔐 Admin Login Test</h2>
+        <input type="email" id="adminEmail" value="admin@sweethub.com" placeholder="Admin Email">
+        <input type="password" id="adminPassword" value="Admin@123" placeholder="Admin Password">
+        <button onclick="testAdminLogin()">Test Admin Login</button>
+        <div id="adminResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>👤 User Login Test</h2>
+        <input type="email" id="userEmail" value="user@example.com" placeholder="User Email">
+        <input type="password" id="userPassword" value="password123" placeholder="User Password">
+        <button onclick="testUserLogin()">Test User Login</button>
+        <div id="userResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Test Results Summary</h2>
+        <div id="summary">
+            <p>Run the tests above to see results...</p>
+        </div>
+    </div>
+
+    <script>
+        let testResults = {
+            adminLogin: null,
+            userLogin: null
+        };
+
+        function updateSummary() {
+            const summary = document.getElementById('summary');
+            let html = '<h3>Test Results:</h3>';
+            
+            if (testResults.adminLogin !== null) {
+                html += `<p>Admin Login: ${testResults.adminLogin ? '✅ SUCCESS' : '❌ FAILED'}</p>`;
+            }
+            
+            if (testResults.userLogin !== null) {
+                html += `<p>User Login: ${testResults.userLogin ? '✅ SUCCESS (or expected failure)' : '❌ NETWORK ERROR'}</p>`;
+            }
+            
+            if (testResults.adminLogin === true) {
+                html += '<p class="success"><strong>🎉 NETWORK ERROR FIXED! Admin can login successfully.</strong></p>';
+            }
+            
+            summary.innerHTML = html;
+        }
+
+        async function testAdminLogin() {
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const resultDiv = document.getElementById('adminResult');
+            
+            try {
+                resultDiv.innerHTML = '<p class="info">Testing admin login with credentials: include...</p>';
+                
+                const response = await fetch('http://localhost:5000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include', // This is the fix!
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    testResults.adminLogin = true;
+                    resultDiv.innerHTML = `
+                        <p class="success">✅ ADMIN LOGIN SUCCESS - NO NETWORK ERROR!</p>
+                        <p>User: ${data.user.name} (${data.user.role})</p>
+                        <p>Token: ${data.token.substring(0, 50)}...</p>
+                        <p><strong>The network error is FIXED!</strong></p>
+                    `;
+                } else {
+                    testResults.adminLogin = false;
+                    resultDiv.innerHTML = `
+                        <p class="error">❌ Login failed: ${data.message}</p>
+                        <p>But no network error - backend is responding!</p>
+                    `;
+                }
+            } catch (error) {
+                testResults.adminLogin = false;
+                resultDiv.innerHTML = `
+                    <p class="error">❌ NETWORK ERROR STILL EXISTS: ${error.message}</p>
+                    <p>The CORS fix may not be working properly.</p>
+                `;
+            }
+            
+            updateSummary();
+        }
+
+        async function testUserLogin() {
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+            const resultDiv = document.getElementById('userResult');
+            
+            try {
+                resultDiv.innerHTML = '<p class="info">Testing user login with credentials: include...</p>';
+                
+                const response = await fetch('http://localhost:5000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include', // This is the fix!
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    testResults.userLogin = true;
+                    resultDiv.innerHTML = `
+                        <p class="success">✅ USER LOGIN SUCCESS - NO NETWORK ERROR!</p>
+                        <p>User: ${data.user.name} (${data.user.role})</p>
+                        <p>Token: ${data.token.substring(0, 50)}...</p>
+                    `;
+                } else {
+                    testResults.userLogin = true; // Expected failure, but no network error
+                    resultDiv.innerHTML = `
+                        <p class="info">⚠️ Login failed: ${data.message}</p>
+                        <p class="success">✅ But NO NETWORK ERROR - Backend responded correctly!</p>
+                        <p>This is expected if the user doesn't exist.</p>
+                    `;
+                }
+            } catch (error) {
+                testResults.userLogin = false;
+                resultDiv.innerHTML = `
+                    <p class="error">❌ NETWORK ERROR STILL EXISTS: ${error.message}</p>
+                    <p>The CORS fix may not be working properly.</p>
+                `;
+            }
+            
+            updateSummary();
+        }
+
+        // Auto-run admin test on page load
+        window.addEventListener('load', () => {
+            console.log('SweetHub Login Fix Test Page Loaded');
+            console.log('Backend should be running on http://localhost:5000');
+            console.log('Frontend origin: ' + window.location.origin);
+        });
+    </script>
+</body>
+</html>
