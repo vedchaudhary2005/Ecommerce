@@ -70,7 +70,7 @@ const Header = () => {
       <div className="w-full">
         <div className="text-center mb-6 px-4">
           <h1 className="font-bold text-left text-xl sm:text-xl lg:text-3xl text-gray-800">
-            Order your favourite Sweet Here
+            Order your favourite Product Here
           </h1>
         </div>
         <div className="relative h-[40vw] sm:h-[34vw] mx-auto overflow-hidden rounded-lg bg-gray-200 flex items-center justify-center">
