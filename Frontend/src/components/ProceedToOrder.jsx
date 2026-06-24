@@ -374,7 +374,7 @@ const ProceedToOrder = () => {
                     className="mr-2"
                   />
                   <label htmlFor="cod" className="text-sm text-gray-700">
-                    Cash on Delivery (COD)
+                    To complete payment call on (93104 13217)
                   </label>
                 </div>
               </div>
